@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>你该和他复合吗 · 文犬测试</title>
+<meta name="description" content="20道题，不谈你还爱不爱，只判断这一次该不该。答完直接给你一句结论。">
+<style>
+:root{
+  --bg:#f4f0f2; --card:#ffffff; --tx:#1f1a24; --mut:#8f8794;
+  --a1:#c8737f; --a2:#3a2f45; --line:rgba(31,26,36,.12); --soft:#faf7f8;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"PingFang SC","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--tx);min-height:100vh;-webkit-font-smoothing:antialiased}
+.w{max-width:560px;margin:0 auto;padding:0 16px 40px}
+.pg{display:none}.pg.on{display:block;animation:fi .4s ease}
+@keyframes fi{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fl{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+.top{display:flex;align-items:center;gap:8px;padding:13px 0 11px;border-bottom:1px solid var(--line);margin-bottom:18px}
+.top-n{font-size:14px;font-weight:800;letter-spacing:.02em}
+.top-t{font-size:10px;color:var(--mut);border:1px solid rgba(31,26,36,.2);border-radius:10px;padding:2px 7px;margin-left:auto;letter-spacing:.12em}
+.bp{border:none;border-radius:50px;padding:13px 30px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;box-shadow:0 10px 22px -8px rgba(58,47,69,.55);transition:transform .15s}
+.bp:hover{transform:translateY(-2px)}
+.bs{border:1.5px solid rgba(31,26,36,.2);border-radius:50px;padding:12px 22px;font-size:15px;font-weight:800;cursor:pointer;font-family:inherit;background:var(--card);color:#4a3f52;transition:transform .15s}
+.bs:hover{transform:translateY(-2px)}
+.ic{text-align:center;padding:10px 0 26px}
+.mug{width:150px;margin:0 auto 16px;display:block;animation:fl 3.4s ease-in-out infinite}
+h1{font-size:clamp(23px,5.6vw,34px);font-weight:900;line-height:1.22;margin-bottom:12px;letter-spacing:-.01em}
+.hl{background:linear-gradient(135deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub{font-size:14px;color:#6b6274;margin-bottom:20px;line-height:1.6}
+.pills{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:28px}
+.pill{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:5px 10px;font-size:12.5px;color:#6b6274;white-space:nowrap}
+.note{font-size:12px;color:var(--mut);margin-top:16px;line-height:1.7}
+footer{text-align:center;font-size:11px;color:var(--mut);margin-top:26px;line-height:1.8}
+.prog{position:sticky;top:6px;z-index:10;background:rgba(244,240,242,.93);backdrop-filter:blur(8px);border-radius:50px;padding:8px 14px;display:flex;align-items:center;gap:10px;margin-bottom:13px;border:1px solid var(--line)}
+.prog-t{flex:1;height:6px;background:rgba(31,26,36,.14);border-radius:3px;overflow:hidden}
+.prog-f{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--a1),var(--a2));transition:width .4s ease;width:0}
+.hint{background:var(--soft);border-radius:12px;border:1px solid var(--line);padding:9px 13px;margin-bottom:13px;font-size:13px;color:#6b6274;line-height:1.6}
+.qcard{background:var(--card);border-radius:16px;padding:22px 20px;margin-bottom:12px;border:1px solid var(--line);box-shadow:0 4px 14px -8px rgba(31,26,36,.18)}
+.qnum{font-size:11px;letter-spacing:.12em;color:var(--mut);margin-bottom:9px;font-weight:700}
+.qtext{font-size:clamp(16px,2.6vw,19px);font-weight:800;line-height:1.55;margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;border:1.5px solid var(--line);background:var(--soft);border-radius:12px;padding:13px 15px;font-size:14.5px;line-height:1.55;cursor:pointer;font-family:inherit;color:var(--tx);transition:all .15s}
+.opt:hover{border-color:rgba(200,115,127,.5);background:#fff}
+.opt.sel{border-color:var(--a1);background:#fdf2f4;box-shadow:0 0 0 3px rgba(200,115,127,.12)}
+.ol{flex:none;width:23px;height:23px;border-radius:50%;background:#fff;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:var(--mut);margin-top:1px}
+.opt.sel .ol{background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;border-color:transparent}
+.nav{display:flex;gap:10px;justify-content:space-between;align-items:center}
+.nav .bp{flex:1}
+button:disabled{cursor:not-allowed}
+.rh{background:linear-gradient(140deg,#3a2f45,#221b2b);color:#fff;border-radius:18px;padding:24px 22px 22px;text-align:center;margin-bottom:13px}
+.rf{font-size:30px;line-height:1;margin:0 auto 12px;width:62px;height:62px;border-radius:50%;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.16);display:flex;align-items:center;justify-content:center}
+.rn{font-size:11px;letter-spacing:.4em;opacity:.55;margin-bottom:10px;text-indent:.4em}
+.vbig{font-size:clamp(27px,7.2vw,38px);font-weight:900;line-height:1.2;letter-spacing:-.02em;margin-bottom:11px}
+.vtype{display:inline-block;font-size:11.5px;letter-spacing:.08em;border:1px solid rgba(255,255,255,.3);border-radius:20px;padding:4px 13px;margin-bottom:12px;opacity:.8}
+.rvs{font-size:13.5px;line-height:1.72;opacity:.82}
+.rfit{margin-top:17px;padding-top:15px;border-top:1px solid rgba(255,255,255,.16)}
+.rfitn{font-size:38px;font-weight:900;line-height:1;background:linear-gradient(135deg,#ffd0d6,#fff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.rfitl{font-size:11px;letter-spacing:.18em;opacity:.6;margin-top:6px}
+.rwin{margin-top:13px;font-size:13px;line-height:1.65;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.18);border-left:3px solid #d99aa4;border-radius:10px;padding:10px 12px;text-align:left}
+.rvd{margin-top:10px;font-size:13.5px;line-height:1.65;background:rgba(255,255,255,.1);border-radius:10px;padding:10px 12px;text-align:left}
+.card{background:var(--card);border-radius:16px;padding:20px 18px;margin-bottom:12px;border:1px solid var(--line);box-shadow:0 4px 14px -8px rgba(31,26,36,.16)}
+.cl{font-size:15px;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.ct{font-size:14.5px;line-height:1.85;color:#413a4a}
+.ct p+p{margin-top:10px}
+.bdg{font-size:11px;font-weight:800;background:#fdf2f4;color:var(--a1);border-radius:20px;padding:3px 10px;letter-spacing:.02em}
+.ei{padding:14px 0;border-bottom:1px dashed var(--line)}
+.ei:first-of-type{padding-top:2px}
+.ew{font-size:16px;font-weight:800;margin-bottom:4px}
+.em{font-size:13px;color:var(--a1);font-weight:700;margin-bottom:6px}
+.ey{font-size:13.5px;line-height:1.75;color:#514859}
+.bi{display:flex;align-items:center;gap:10px;margin-bottom:11px}
+.bn{font-size:13px;width:64px;flex:none;color:#514859;font-weight:700}
+.bk{flex:1;height:8px;background:var(--soft);border-radius:4px;overflow:hidden;border:1px solid var(--line)}
+.bf,.bg{height:100%;border-radius:4px;width:0;transition:width .9s cubic-bezier(.22,1,.36,1)}
+.bf{background:linear-gradient(90deg,var(--a1),var(--a2))}
+.bg{background:linear-gradient(90deg,#cfc4cd,#9a8fa0)}
+.bv{font-size:12px;width:28px;text-align:right;color:var(--mut);font-weight:700}
+.ti{display:flex;gap:11px;margin-bottom:13px;align-items:flex-start}
+.ti:last-child{margin-bottom:0}
+.tn{flex:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--a1),var(--a2));color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px}
+.ti div:last-child{font-size:14px;line-height:1.75;color:#413a4a}
+.warn{background:#fdf3f4;border:1px solid rgba(200,115,127,.32);border-radius:14px;padding:16px 17px;margin-bottom:12px}
+.warn .cl{color:#a84f5d}
+.warn .ct{color:#6d3a43}
+.share{background:linear-gradient(140deg,#fdf2f4,#fff);border:1.5px dashed rgba(200,115,127,.34);border-radius:16px;padding:18px;text-align:center;margin-top:4px}
+.share-t{font-size:15px;font-weight:800;color:#a84f5d;margin-bottom:7px}
+.share-m{font-size:13px;line-height:1.75;color:#6b6274}
+</style>
+</head>
+<body>
+
+<div id="p0" class="pg on"><div class="w">
+  <div class="top">
+    <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="6" y="4" width="24" height="28" rx="3" fill="#fff" stroke="#1f1a24" stroke-width="2"/><path d="M11 4v28" stroke="#1f1a24" stroke-width="2"/><path d="M16 11h8M16 16h8M16 21h6" stroke="#3a2f45" stroke-width="1.8" stroke-linecap="round"/><path d="M27 8l3 3-3 3" stroke="#c8737f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="top-n">文犬测试</span><span class="top-t">原创自测</span>
+  </div>
+  <div class="ic">
+    <svg class="mug" viewBox="0 0 200 150">
+      <circle cx="79" cy="75" r="46" fill="none" stroke="#3a2f45" stroke-width="4.5"/>
+      <circle cx="121" cy="75" r="46" fill="none" stroke="#c8737f" stroke-width="4.5" stroke-dasharray="15 10" stroke-linecap="round"/>
+      <circle cx="100" cy="75" r="8" fill="#c8737f" opacity=".16"/>
+      <circle cx="100" cy="75" r="3.6" fill="#c8737f"/>
+    </svg>
+    <h1>你该和他<br><span class="hl">复合</span>吗？</h1>
+    <p class="sub">不问你还爱不爱，也不问你有多难受。<br>只问一件事：这一次，该不该回去。</p>
+    <div class="pills"><span class="pill">📝 20题</span><span class="pill">⏱ 5分钟</span><span class="pill">🫀 9种结论</span><span class="pill">🔬 十维分析</span></div>
+    <button class="bp" style="padding:14px 40px" onclick="startQ()">开始测试 →</button>
+    <p class="note">凭第一反应选，别选「显得我很大度」的那个答案。<br>结果只针对这一次，不是终身判决。</p>
+  </div>
+  <footer>© 文犬测试 ｜ 原创测试，未经授权禁止转载</footer>
+</div></div>
+
+<div id="p1" class="pg"><div class="w">
+  <div class="top">
+    <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="6" y="4" width="24" height="28" rx="3" fill="#fff" stroke="#1f1a24" stroke-width="2"/><path d="M11 4v28" stroke="#1f1a24" stroke-width="2"/><path d="M16 11h8M16 16h8M16 21h6" stroke="#3a2f45" stroke-width="1.8" stroke-linecap="round"/><path d="M27 8l3 3-3 3" stroke="#c8737f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="top-n">文犬测试</span><span class="top-t">原创自测</span>
+  </div>
+  <div class="prog"><div class="prog-t"><div class="prog-f" id="pf"></div></div><div style="font-size:13px;color:#8f8794;white-space:nowrap"><span id="pnum">1</span>/<span id="ptot">20</span></div></div>
+  <div class="hint" id="hint"></div>
+  <div class="qcard"><div class="qnum" id="qnum"></div><div class="qtext" id="qtext"></div><div class="opts" id="opts"></div></div>
+  <div class="nav"><button class="bs" id="bP" onclick="prevQ()">←</button><button class="bp" id="bN" onclick="nextQ()">下一页 →</button></div>
+  <footer>© 文犬测试 ｜ 原创测试，未经授权禁止转载</footer>
+</div></div>
+
+<div id="p2" class="pg"><div class="w">
+  <div class="top">
+    <svg width="26" height="26" viewBox="0 0 36 36" fill="none"><rect x="6" y="4" width="24" height="28" rx="3" fill="#fff" stroke="#1f1a24" stroke-width="2"/><path d="M11 4v28" stroke="#1f1a24" stroke-width="2"/><path d="M16 11h8M16 16h8M16 21h6" stroke="#3a2f45" stroke-width="1.8" stroke-linecap="round"/><path d="M27 8l3 3-3 3" stroke="#c8737f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    <span class="top-n">文犬测试</span><span class="top-t">原创自测</span>
+  </div>
+  <div id="rH" class="rh"></div>
+  <div id="rV" class="card"></div>
+  <div id="rX" class="card"></div>
+  <div id="rR" class="warn"></div>
+  <div id="rD" class="card"></div>
+  <div id="rM" class="card"></div>
+  <div id="rO" class="card"></div>
+  <div id="rA" class="card"></div>
+  <div class="share">
+    <div class="share-t">📸 觉得准的话，截个图发出去</div>
+    <div class="share-m">带上你那句结论发笔记，@文犬测试，看看朋友们测出来是什么。<br>被说中的那个人，通常一句话都不用多讲。</div>
+  </div>
+  <div style="margin-top:10px;display:flex;gap:10px">
+    <button class="bs" style="flex:1" onclick="copyResult()">复制结论</button>
+    <button class="bs" style="flex:1" onclick="restart()">重新测一次</button>
+  </div>
+  <footer>© 文犬测试 ｜ 原创测试，未经授权禁止转载<br>结果为娱乐性自评，不构成心理或情感建议</footer>
+</div></div>
+
+<script>
+/* ============================================================
+   【主题配置区】换主题只改这一段，下面的逻辑不用动
+   ============================================================ */
+var CFG = {
+  brand: '文犬测试',
+  LOCK: false,
+  LOCK_TITLE: '完整报告还没解锁',
+  LOCK_DESC: '',
+  PAY_LINK: '',
+  PRICE: ''
+};
+
+// 十个维度：分数越高 = 越支持「复合」
+var DK = ['LOV','GRV','CHG','TRS','IDL','BDY','PAT','CLR','INV','RSP'];
+var DN = ['感情余量','旧账清算','变化证据','信任存留','独处能力','边界强度','关系耐性','自我觉察','沉没投入','对方回应'];
+
+// 计分标定：各维度在普通作答下的均值与标准差
+var MEAN = [3.06,-0.48,-0.85,-3.13,-0.21,-2.28,1.00,0.62,3.70,-1.74];
+var SD   = [6.25,3.28,2.96,4.08,4.78,4.79,3.10,5.66,3.20,4.69];
+var D0 = 3.68;
+var PEN = {END:-0.29,TRY:-0.56,FIX:-0.56,BTR:0.75,STL:-0.32,LON:0.52,MOV:-0.29,ALR:0.36,YOU:0.39};
+
+// 三条辅助轴
+var MOTlb={acc:'累积耗竭型',bst:'一次爆发型',fad:'慢慢淡掉型',unk:'说不清型'};
+var MOTtx={
+acc:'你们不是被某一件事击穿的，是被很多件小事一点点磨掉的。这类关系最麻烦的地方在于：没有一个可以指着说「就是它」的原因，所以也没有一个可以修的零件。要修，只能修日常的相处方式——那比修一件具体的事难十倍，但它也是唯一有效的入口。',
+bst:'你们是被一次具体的事件炸开的。这类分开有个隐藏的好处：原因是清楚的，可以谈，可以复盘。也有个隐藏的坏处：那件事往往涉及面子和尊严，而这两样东西最难在两个人之间低头。能不能过去，看的不是谁对，是谁愿意先把「我没错」放一放。',
+fad:'你们是慢慢没话说的。没有争吵，没有背叛，就是一天天淡下去，某天忽然发现已经很久没有真的聊过。这类分开最容易被误判成「不严重」，其实它最难回头——因为它消耗的是吸引力本身，不是某一件事的对错（Aron 的自我扩展理论里，关系退化的核心是「一起变新」的能力丧失）。',
+unk:'你自己也说不清为什么分的。这不是你糊涂，是那段关系的结束本来就没有一个清晰的说法。这种状态最容易让人反复——因为没有一个明确的结束理由，大脑就不会允许它结案。你需要先给这件事写一个版本，哪怕不完美。'};
+var PRSlb={raw:'还停在原地',msk:'假装已经好了',fwd:'真的往前走了',bck:'偶尔还会回头'};
+var PRStx={
+raw:'你其实没有离开过那段关系，只是换了个地方继续待在里面。你的日常还在围着它转——刷他的动态、反复回想、在某个时刻突然心里一沉。这个状态不是软弱，是情绪还没有走完该走的路。但它意味着：你现在做的任何决定，都带着没消化完的东西。',
+msk:'你对外说「早过去了」，对内一天想起三次。这种「表现型复原」很常见，也很耗人——因为你同时在付两份成本：一份是难过的，一份是假装不难过的。它最大的风险是让你错过真正的修复，因为没人会来帮你，所有人都以为你好了。',
+fwd:'你是真的在往前走了。这不代表你不会想起他，而是想起他的时候，那件事已经不再左右你今天的心情。这个状态下你做的决定质量最高——因为你不需要靠复合来缓解什么。如果这时候你还想复合，那个理由通常是真的。',
+bck:'大部分时间你过得挺好，但总有那么几个瞬间会突然回头：一首歌、一家店、某个季节。这很正常，情绪本来就不是单调递减的。别把这种偶尔的回头当成「我还爱他」的证据——它更可能只是记忆的正常回声，过一会儿就散了。'};
+var TPOlb={love:'还在乎他',unw:'不甘心',lone:'怕一个人'};
+var TPOtx={
+love:'你的驱动力是真实的感情。这在三种里是最干净的一种——它不依赖他给你什么，也不依赖你怕失去什么。但也正因为它干净，最容易在没有回应的关系里被无限期消耗。感情可以是你回去的理由，但它不能同时是你等待的理由。',
+unw:'你的驱动力是不甘心。这两个字听着刺耳，但它非常普遍，而且几乎没有人愿意承认。它的运作方式是：你越算「我付出了多少」，越走不出来；而你想复合，其实是想把那笔账做平（Arkes & Blumer 的沉没成本研究，1985）。账做不平的——已经花掉的时间和委屈，回不来。',
+lone:'你的驱动力是怕一个人。这是三种里最容易解决、也最容易搞错的一种。因为孤独和爱在体感上非常像：都会让你在夜里想找一个人。区别在于，孤独是可以被任何人缓解的，爱不行。你现在需要的可能不是他，是一个不空的晚上。'};
+
+// 八种结果类型
+var TYPES = [
+{k:'END',n:'清醒回头型',f:'🕯️',fr:[66,95],
+vc:'可以复合。',
+vs:'不是将就，是你们上次吵崩的那件事，现在真的有了不同的答案。',
+vd:'复合成功率很高。但高不代表自动成立——你们还差一次把旧账摊开说完的对话。',
+win:'动作窗口 · 三个月内完成一次「条件对话」，不谈感情，只谈规则',
+nr:'你的答案里，感情是活的，旧账是清的，而且你说得出他这一年哪里变了。这三个条件同时成立的关系，在复合这件事上属于少数。|依恋研究里有个结论值得你知道：分手后能重建的关系，关键不在于当初爱得多深，而在于两个人能不能把「上次为什么崩」讲成同一个版本的故事（Mikulincer & Shaver, 2007）。你们现在讲得成同一版本——这是你说出口的那些细节透露的。|另外，你在「能不能一个人过」这一项上得分也高。这一点比你想的重要：不是因为缺他不行才想复合，这样的复合才有可能是干净的。',
+ex:[['复合之后，前三个月会像陌生人','别指望回到从前，那是另一个关系','复合不是续上，是重开。头三个月你们会重新试探、重新小心、重新不知道该说什么。很多人在这里误判成「果然还是不行」，其实那只是重启的正常代价。给这段关系三个月，中间不做任何重大判断。'],['旧账还会被翻出来一次','而且一定是在你们吵得最凶的时候','清过的账不等于不再提。人一急就会拿最熟悉的武器。提前约定一件事：吵到某个点就停，第二天再说。这条规则比任何道歉都管用。'],['你们会第二次因为同一类事崩','区别在于这次你知道它长什么样','关系破裂的模式高度重复——这是 Gottman 追踪研究里最稳定的发现之一。你们的模式已经暴露过一次，这是优势不是劣势，因为你终于知道该在哪个路口刹车。']],
+rk:'复合之后太急着「把落下的补回来」，把三个月的重启期压缩成三周，然后在同一个没修好的地方又崩一次。',
+ac:['复合后的第一次正式谈话，不谈感情，只谈规则：钱怎么算、吵架怎么停、各自的独处时间怎么保。写下来，两个人都留一份。这条听起来最不浪漫，但它救的关系最多。','设一个三个月的观察点。到那天只问自己一个问题：「这三个月里，我有没有一次为了不吵架而咽下真话？」有，就说出来。','别把复合的事告诉太多人。外人的期待会变成你们的压力，而这段关系现在最不需要的就是观众。'],
+v:[1.525,1.137,1.058,1.034,1.163,1.093,0.256,1.003,0.291,1.113]},
+
+{k:'TRY',n:'有条件复合型',f:'🔑',fr:[54,82],
+vc:'可以复合，但要谈条件。',
+vs:'感情不用怀疑。要怀疑的是——你们打算怎么处理上次那件事，这次。',
+vd:'复合有基础。但你现在想的还是「怎么让他回来」，而不是「回来之后怎么办」。',
+win:'动作窗口 · 复合之前必须完成一次条件对话，谈不拢就先不谈',
+nr:'你的感情维度高，投入也重，说明你想复合不是一时冲动。但旧账和变化这两项分数不高——也就是说，你们分开的原因还摆在那儿，只是被「我想他」盖住了。|Rusbult 的投资模型（1980）把关系承诺拆成三个变量：满意度、替代性、投入量。你的投入量很高，满意度中等，替代性很低。这个组合最容易产生「明知道有问题还是要回去」的决定。|它不必然是错的，但它意味着：如果你不做点什么，回去之后会照原样再走一遍。',
+ex:[['他会答应的概率，比你以为的高','但答应的理由可能不是你想的那个','分开一段时间后回头的人，很多是因为不习惯，不是因为想清楚了。你要分清他是「想你了」还是「想好了」。分辨方法很简单：让他说出一件具体会改的事，说不出来就是前者。'],['你现在的忍，会在半年后一起爆','让掉的条件不会消失，只会攒着','为了复合而让掉的东西，会在之后的每一次争吵里被重新拿出来。所以现在谈，比以后吵便宜得多。'],['复合不是回到过去，是签一份新合同','旧合同已经违约终止了','别用「我们以前多好」当谈判基础，以前那套已经不成立了。新的合同里，你得写清楚自己不能再让的是什么。']],
+rk:'用一个「我再也不计较了」的承诺换回关系，然后在心里默默记了两年账。',
+ac:['复合前必须有一次「条件对话」，只谈三件事：上次分开的直接原因、这次各自要让的一步、下次同样情况怎么处理。谈不拢就先不谈复合。','给自己写一张「不能让的清单」，三条以内。写下来是为了在情绪上来的时候还记得。','复合之后的前两个月，每周留十分钟问一句「这周有什么你没说出口的」。这句话能拦掉大部分累积型崩溃。'],
+v:[1.2,-0.632,-0.263,-0.081,0.367,-0.209,0.456,0.067,1.118,0.124]},
+
+{k:'FIX',n:'先修再谈型',f:'🧱',fr:[40,64],
+vc:'现在别复合。',
+vs:'不是不能，是现在这个时间点回去，你们只会把同一场架再吵一遍。',
+vd:'感情够，问题也明确，缺的是能处理这个问题的条件。',
+win:'动作窗口 · 60到90天静默期，期间不主动联系、不看动态',
+nr:'你的分数集中在中间偏一处：想复合的意愿够，但你自己也清楚，上次那个问题没有任何进展。这不是感觉问题，是条件问题——门锁着，你在门口站得再久也进不去。|关系修复的研究里有个反复出现的结论：在没有新增信息的情况下重启同一段关系，六个月内的分手率和第一次几乎一样。所谓「新增信息」，指的是可以被验证的具体的改变，不是「我会改」，而是「我上个月开始看心理咨询」「我换了工作，不再每周出差」这种。',
+ex:[['你现在回去，是在替他省掉改变的成本','他不用改，也能拿回你','如果你在他什么都没变的时候回去，你就等于告诉他：上次那件事，不用解决也能过关。下一次，同样的事会再来一遍，而且更快。'],['等待不是被动，是现在唯一还有效的动作','你能做对的事，是不动','很多人把「等」理解成软弱。但在这个阶段，等是唯一能产生信息的行为——他的行动会告诉你答案，而你现在做的任何事都会干扰这个信号。'],['三个月是一个真实的分水岭','不是玄学，是情绪的衰减周期','强烈情绪在三个月左右会明显降下来。三个月后你还在想他，那基本可以排除「一时冲动」；三个月后你不想了，那这三个月就替你做完了一次筛选。']],
+rk:'忍不住先发了一句「最近怎么样」，把攒了三个月的判断力一次性清零。',
+ac:['设定一个明确的静默期（建议 60 到 90 天），期间不主动联系、不看他的社交动态。这不是策略，是让你恢复判断力最直接的办法。','静默期里做一件跟他无关、但你能看到进度的事。你需要一个不依赖他的自我证明，否则复不复合都站不稳。','静默期结束时，只问一个问题：「他有没有做任何一件具体的事？」有，再谈；没有，这件事就结了。'],
+v:[-0.261,-1.176,-0.624,-0.707,0.44,0.251,0.59,0.571,0.842,-0.23]},
+
+{k:'BTR',n:'明知故犯型',f:'🔁',fr:[32,56],
+vc:'不要复合。',
+vs:'你比谁都清楚会怎么收场——你只是需要有人替你说出来。',
+vd:'信任这一项几乎见底。这不是时间能修的。',
+win:'动作窗口 · 一个月内，把「他再犯什么我立刻走」写成白纸黑字',
+nr:'你的信任和边界两项都低，而沉没投入不低。这个组合在关系研究里有个不太客气的名字：高投入—低信任循环。机制是——因为投入太多所以不愿走，因为不走所以继续投入，信任却在这个过程中一路下滑。|Gottman 对关系破裂的追踪研究指出，真正预测分手的不是吵得多凶，而是「蔑视」的出现：当一个人开始觉得对方可笑、不值、看不起，关系基本就进入不可逆阶段。你填的答案里，有几句已经很接近这个状态了。',
+ex:[['你想要的不是他回来，是这件事有个好结局','这两件事经常被混在一起','人不甘心的是「我付出了这么多，居然是这种结果」。所以你想复合，有一部分是想把账做平。但账做不平——已经花掉的时间和委屈，回不来了。'],['你会在这段关系里变成另一个人','而且是你自己不喜欢的那种','低边界的人回到同一段关系里，通常不会变强，只会更小心、更会察言观色、更不敢提要求。这个变化是渐进的，你自己察觉不到，但身边人看得见。'],['复合的成本，这次由你一个人付','因为只有你想复合','单方面想复合的关系，重启时的所有让步都会落在你身上。你以为你在争取，其实你在降价。']],
+rk:'复合了，然后在第三次因为同一件事崩掉的时候，终于承认第一次就该走。',
+ac:['做一次「如果他从没出现过」的推演：把这段关系从你生命里拿掉，你现在会在哪、和谁在一起、过得怎么样。如果那个版本更好，答案已经出来了。','把你想复合的理由逐条写下来，每条后面标一句：这条是关于他的，还是关于我的。大部分条目会是后者。','设一条硬线，写在能看见的地方：如果他再犯某件具体的事，我立刻走，不讨论。写下来的规则比当下的决心可靠。'],
+v:[0.551,-1.312,-0.864,-1.543,-0.934,-1.357,-0.681,-0.508,1.049,-0.865]},
+
+{k:'STL',n:'沉没成本型',f:'💸',fr:[24,44],
+vc:'不要复合。',
+vs:'你舍不得的不是他，是那几年。这两样东西，得分开算。',
+vd:'沉没投入极高，而感情余量一般。这是这次测试里最清楚的一个信号。',
+win:'动作窗口 · 两周内做一次「结账」，然后停止所有关于他的复盘',
+nr:'你在「投入」这一项上的分数是所有维度里最高的，而感情余量其实一般，变化证据几乎没有。这个组合非常典型：不是还爱，是不甘心。|心理学里管这个叫沉没成本谬误（Arkes & Blumer, 1985）——已经付出的东西会扭曲接下来的判断，让人继续投入一件已经不值得的事。它之所以难破，是因为放弃的那一刻损失会变得「确定」，而继续还有「可能回本」的幻觉。|还有一层：蔡格尼克效应（Zeigarnik, 1927）——未完成的事在记忆里格外顽固。你们的关系是被中断的，不是自然结束的。中断的事情会一直占着你的注意力，直到你亲手给它画上句号。',
+ex:[['你算的不是感情账，是回本账','所以越算越亏','「我为他做了那么多」这句话，本质是在算投入产出。感情一旦开始算账，就已经不是感情了。这不是你的错，但你需要看见它。'],['就算复合，那几年也回不来','你可能在追一个不存在的东西','你想回到的不是他身边，是当时那个状态的自己。这个目标，任何复合都完成不了。'],['不甘心会伪装成深情，而且装得很像','连你自己都被骗过去了','判断方法：想象他现在过得很好、有了新的伴侣、看起来很幸福。你的第一反应是「那我也放心了」，还是「凭什么」。后者就是不甘。']],
+rk:'花两年时间追一个「把账做平」的结果，最后发现那笔账从头到尾都不存在。',
+ac:['做一次「结账仪式」：把这段关系的投入、得到、失去各写一栏，写完读一遍，然后收起来。听上去像自我安慰，但对未完成事件来说，形式感是有实际作用的。','用一个具体的新投入替换旧投入。不甘心的本质是注意力占位，你不给它新的东西，它不会自己走。','给自己一个明确的死线：如果到某月某日还是这个状态，就去找心理咨询。这不是病情严重，是这件事值得一个专业的人帮你拆。'],
+v:[0.064,-0.768,-0.684,-0.498,0.295,-0.132,0.055,-0.22,1.531,-1.007]},
+
+{k:'LON',n:'孤独驱动型',f:'🪫',fr:[22,42],
+vc:'不要复合。',
+vs:'你想要的不是他，是有人在。这两件事差得很远。',
+vd:'独处能力这一项很低。这是唯一一个「换个人也能解决」的维度——所以问题不在他。',
+win:'动作窗口 · 先填满四周的空白时段，一个月后再问这个问题',
+nr:'你的独处能力明显偏低，而感情余量也不高。这两个一起出现，指向一个很具体的结论：你现在想复合，主要不是因为想他，是因为一个人待着难受。|依恋理论里，这接近焦虑型依恋的典型模式（Hazan & Shaver, 1987）：对分离的耐受度低，会用「有人在」来稳定情绪，而不是用关系本身的质量。焦虑型依恋不是缺陷，但它在分手后会产生一个陷阱——你会把「不难受」误认为「还爱」。',
+ex:[['复合能解决孤独，但只解决三个月','之后就变成新的孤独','和不对的人在一起，孤独感不会消失，会升级成「有人在旁边但我还是一个人」。那种孤独比独处更难熬，因为它没有出口。'],['你会用降低标准来换陪伴','而且你不会承认自己在降','孤独驱动的关系选择，通常伴随着一连串「其实也还好」的自我说服。这些说服在当下都成立，三个月后会集体失效。'],['你的判断力现在被孤独压着','所以现在做的决定不算数','情绪状态下做出的关系决定，准确率明显低于平静状态。这不是道德问题，是认知资源被占用了。你现在需要的是恢复，不是决定。']],
+rk:'复合了，然后在某个他还是不理你的晚上，发现自己比一个人的时候更孤单。',
+ac:['先做一件跟复合无关的事：把接下来四周的日程填满，具体到晚上做什么。孤独最怕的是空白时段，不是独处本身。','记一个月，每天写一句「今天我想他是在什么时候」。你会发现想他的时刻高度集中在晚上和周末——那就是孤独，不是爱。','一个月后再看这个问题。如果那时候你还想复合，那个答案的可信度会高得多。'],
+v:[-1.153,-0.36,-0.323,-0.22,-1.513,-0.744,-0.213,-0.436,0.428,-0.371]},
+
+{k:'MOV',n:'单向等待型',f:'📮',fr:[18,38],
+vc:'不要等了。',
+vs:'这句不是判断，是事实。你其实早就看到了，只是一直没让自己承认。',
+vd:'对方回应这一项接近零。这不是概率问题。',
+win:'动作窗口 · 一周内做一次信号清零，把「动作」和「解读」分开',
+nr:'你的感情余量不低——这是真的，不是不甘。但同时，对方回应这一项几乎是零：没有主动联系、没有明确信号、没有可验证的动作。这是一个单方面的状态。|单方面的等待在心理学上接近「间歇性强化」：当一个人偶尔给一点回应，等待就会被加强，因为那点回应证明了「还有可能」。但这种可能性只存在于你的解读里，不存在于他的行动里。',
+ex:[['你等的不是他回头，是一个交代','但交代不会自己来','「他至少该跟我说清楚」——这句话很合理，但它成立的前提是他愿意说。他不愿意，你也拿不到。所以这个交代，只能你自己给自己。'],['每一次「他可能只是忙」，都在延长这件事','解释是等待的燃料','人会给模糊的信号编故事，这是大脑的正常工作方式。问题是每编一次，你就多等一段。停止解释，等待才会结束。'],['你不会因为等得久而得到他','时间不产生感情，只产生习惯','「我等他这么久他总会感动」——这个假设在现实中几乎不成立。感动是情绪，感情是选择，两者不通。']],
+rk:'再等一年。一年之后，你既没等到他，也把自己等没了。',
+ac:['做一次「信号清零」：把过去三个月里所有让你觉得「他还有意思」的迹象列出来，逐条问——这是一个动作，还是我的解读。大部分会落在后者。','如果他真的联系你，记住一件事：一次联系不等于复合。看他有没有提那件事。不提，就还是一样的。','把「等他」换成一个有截止日期的目标。人的等待需要一个替代物才停得下来，空着停不住。'],
+v:[1.2,-0.156,-0.203,-0.011,0.223,0.098,0.189,0.427,0.428,-1.501]},
+
+{k:'ALR',n:'已经走出来型',f:'🌤️',fr:[16,34],
+vc:'不用复合了。',
+vs:'不是不能，是已经不需要了。这个区别，比复不复合重要得多。',
+vd:'你的感情余量很低，但其余指标都很健康。这是这次测试里最好的一种结果。',
+win:'动作窗口 · 什么都别做。这周给自己买一样一直想买的东西',
+nr:'你的感情余量明显偏低，但独处能力、边界、耐性都不错——这不是「冷淡」，是这件事在你身上已经走完了它的周期。情绪研究里有个说法：一段关系真正的结束，不是不再想起，而是想起的时候不再有情绪负荷。你的答案显示，你大概已经到了这个位置。|所以你现在问「该不该复合」，问的其实不是复合，是「我这样算不算真的放下了」。',
+ex:[['你现在想要的不是复合，是确认自己正常','而这个确认不该由他给','分手之后最难的不是痛，是怀疑自己是不是有问题。所以你还在复盘、还在测这个。但「正常」不需要谁来证明，尤其不需要他来。'],['偶尔想起，不等于还爱','记忆有回声，回声不是人','一首歌、一家店、某个季节会让你突然回头，这很正常。别把这种回头当成信号——它过一会儿就散了。'],['你可能会因为一次偶遇，把进度条拉回去','而且只需要十分钟','人在状态好的时候最容易高估自己的免疫。如果真遇到了，提前想好一句话就够了：「好久不见。」']],
+rk:'因为一个偶尔的瞬间，怀疑自己这几个月的努力是假的，然后重新开始复盘。',
+ac:['别再去验证。停止复盘、停止分析、停止测第二次。你已经得到答案了，继续问只会让这个答案贬值。','把这段时间真正赚到的东西写下来：你学会了什么、忍住了什么、看清了什么。这些是这段关系唯一还留给你的东西。','如果他哪天联系你，允许自己心动，但不许自己回到原位。你已经不是那个位置上的你了。'],
+v:[-1.965,0.797,-0.023,0.198,1.524,1.399,0.59,0.499,-1.088,-0.371]},
+
+{k:'YOU',n:'心里有数型',f:'🪞',fr:[34,56],
+vc:'你心里已经有答案了。',
+vs:'你来测这个，不是为了知道该不该，是为了有人同意你。',
+vd:'你的答案分布很平均——这不是没想清楚，是你在刻意保持平衡。',
+win:'动作窗口 · 七天之内必须给出结论，复合或者彻底结束，两个都行',
+nr:'你的各项得分都落在中间，没有明显的高低。这种情况通常不是「不清楚」，而是「太清楚了所以不敢往任何一边站」。|决策研究里有个现象叫偏好反转：人在独处时做的判断，和有观众在场时做的判断会不一样。你现在来测这个，某种程度上是在找一个外部的声音——因为你自己那个声音已经说完了，你不想听。',
+ex:[['你已经做过决定了','只是还没执行','回想一下这一个月：有没有某个瞬间，你非常清楚地知道答案？那个瞬间的答案，就是真的。'],['再测十次也是同一个结果','信息不缺，缺的是承认','你不缺分析，你已经分析了很多遍。你需要的是允许自己按那个结论行事。'],['拖着不决定，也是一种决定','而且是最贵的那种','不选的代价是时间。而时间在这件事上是有明确成本的——你会用掉的是本来可以用来重新开始的那一两年。']],
+rk:'一直在等某个「更清楚的时刻」，然后发现那个时刻从来没来过。',
+ac:['拿一张纸，写一句「我其实想……」，然后不停笔写三分钟。不要修改，不要判断。写完读一遍，第一句通常是真的。','设一个七天的期限，到期必须给出结论：复合，或者彻底结束。两个都行，只有「再想想」不行。','告诉一个信得过的人你的决定。说出口的决定，执行率高得多。'],
+v:[-0.179,-0.019,0.097,-0.081,0.078,0.021,-0.079,-0.077,0.015,0.053]}
+];
+
+// 二十道题
+var QS=[
+{q:'分手那天，你记得最清楚的是什么？',o:[
+['A','他说的话，哪一句、什么表情都还记得',{LOV:2,love:2}],
+['B','我当时的样子，哭成什么样、说了什么蠢话',{BDY:-2,unw:2}],
+['C','那天的天气、地点、我穿的什么',{CLR:1}],
+['D','记不太清了',{LOV:-1,fwd:2}],
+['E','我不想回忆',{msk:2,LOV:1}]]},
+
+{q:'最近一个月，你主动联系过他几次？',o:[
+['A','一次都没有，忍住了',{BDY:3,IDL:1}],
+['B','有两三次，都是有事',{}],
+['C','很多次，控制不住',{BDY:-2,IDL:-2}],
+['D','只在节日发过一句',{BDY:-1,love:1}],
+['E','他主动找过我',{RSP:3,LOV:1}]]},
+
+{q:'如果他现在发来一句「在吗」，你的第一反应是？',o:[
+['A','立刻回，心跳很快',{IDL:-2,LOV:2,love:1}],
+['B','等一会儿再回，装淡定',{BDY:-1,love:1}],
+['C','先想他为什么找我',{CLR:2}],
+['D','不太想回',{fwd:2,LOV:-1}],
+['E','会回，但没什么感觉了',{fwd:1,LOV:-2}]]},
+
+{q:'你们当初分开，更像下面哪一种？',o:[
+['A','一次具体的冲突，有明确的那件事',{bst:3,CLR:2,GRV:1}],
+['B','长期积累，最后被一件小事引爆',{acc:3,CLR:2}],
+['C','没有具体的事，就是慢慢没话说了',{fad:3,CLR:1}],
+['D','说不清，每次想起理由都不一样',{unk:3,CLR:-2}],
+['E','太复杂，好几件事叠在一起',{acc:1,unk:1,CLR:-1}]]},
+
+{q:'那件事之后，他有没有做过任何具体的改变？',o:[
+['A','有，我能说出具体是什么',{CHG:3,RSP:2}],
+['B','有一点，但不明显',{}],
+['C','说过会改，但没看到动作',{CHG:-2,TRS:-1}],
+['D','完全没有',{CHG:-3,RSP:-1}],
+['E','我不知道他现在什么样',{RSP:-2,CHG:-2}]]},
+
+{q:'你现在能一个人好好过一个周末吗？',o:[
+['A','完全可以，还挺享受',{IDL:3}],
+['B','能过，但有点空',{}],
+['C','很难，一直在刷手机',{IDL:-2}],
+['D','会约人，不想一个人待着',{IDL:-2,lone:1}],
+['E','看情况',{IDL:0}]]},
+
+{q:'想象他有了新的伴侣，你的第一感受是？',o:[
+['A','那我也可以真的放下了',{LOV:2,IDL:2}],
+['B','会很难受，但能接受',{LOV:1,IDL:-1}],
+['C','凭什么',{INV:3,unw:3}],
+['D','不太敢想',{LOV:1,IDL:-1}],
+['E','无所谓',{LOV:-3,fwd:2}]]},
+
+{q:'你们分开的直接原因，现在解决了吗？',o:[
+['A','解决了，我们说清楚了',{GRV:3,TRS:1}],
+['B','部分解决',{GRV:1}],
+['C','没解决，只是不吵了',{GRV:-2}],
+['D','完全没碰过这件事',{GRV:-2,CHG:-1}],
+['E','没有「直接原因」，是累积的',{acc:3,GRV:-1}]]},
+
+{q:'如果复合，你最怕的是什么？',o:[
+['A','怕还是老样子',{TRS:-2,CLR:2}],
+['B','怕我又是那个卑微的人',{BDY:-2,CLR:1}],
+['C','怕他其实没那么想',{RSP:-2,CLR:1}],
+['D','怕浪费时间',{INV:-1,fwd:1}],
+['E','没想过，只想先在一起',{CLR:-3,LOV:1}]]},
+
+{q:'这段关系里，你付出和得到的比例大概是？',o:[
+['A','差不多，基本对等',{BDY:2,TRS:1}],
+['B','我多一些，但可以接受',{}],
+['C','我付出得多太多',{INV:3,BDY:-2}],
+['D','说不清，全混在一起了',{INV:1,CLR:-1}],
+['E','没算过，感情不该算这个',{CLR:-1}]]},
+
+{q:'你们分开多久了？',o:[
+['A','一个月以内',{raw:2}],
+['B','一到三个月',{raw:1}],
+['C','三到六个月',{bck:1}],
+['D','半年到一年',{fwd:1}],
+['E','一年以上',{fwd:2}]]},
+
+{q:'他最近有没有给过你「还有可能」的信号？',o:[
+['A','有明确的，说过想我',{RSP:3,LOV:1}],
+['B','有模糊的，比如点赞、节日问候',{}],
+['C','没有，但我觉得他可能在等我',{RSP:-2,CLR:-2}],
+['D','完全没有，很久没联系了',{RSP:-3}],
+['E','他明确拒绝过我',{RSP:-3,LOV:-2,fwd:1}]]},
+
+{q:'你现在跟别人提起他，一般怎么说？',o:[
+['A','「我们分了，挺好的」',{msk:2,fwd:1}],
+['B','「还在适应」',{raw:2}],
+['C','说他的不好',{TRS:-2,INV:1}],
+['D','说我们以前多好',{LOV:2,unw:1}],
+['E','尽量不提',{msk:1}]]},
+
+{q:'如果复合，你打算怎么处理上次那个问题？',o:[
+['A','已经有具体方案了',{GRV:2,CHG:2,PAT:2}],
+['B','会好好谈一次',{PAT:1}],
+['C','走一步看一步',{PAT:-2}],
+['D','只要他愿意回来，别的以后再说',{CLR:-2,BDY:-2}],
+['E','没想过',{CLR:-2}]]},
+
+{q:'你能接受复合之后，用三个月重新磨合吗？',o:[
+['A','完全可以，本来就需要',{PAT:3,CLR:1}],
+['B','能接受，但会焦虑',{PAT:1,IDL:-1}],
+['C','不太能，我想马上回到从前',{PAT:-3,LOV:1}],
+['D','三个月太久了',{PAT:-2}],
+['E','没想过这个',{CLR:-1}]]},
+
+{q:'最近有没有一个瞬间，你突然觉得「其实我也可以不要他」？',o:[
+['A','有，而且不止一次',{IDL:2,fwd:2}],
+['B','有过一次',{}],
+['C','没有，一次都没有',{IDL:-2,LOV:1}],
+['D','想过，但马上又否定了',{IDL:-1}],
+['E','我不敢这么想',{IDL:-2,LOV:1}]]},
+
+{q:'你希望他变成什么样，你才愿意复合？',o:[
+['A','我说得出三条具体的',{CLR:2,CHG:1}],
+['B','大概有个方向',{}],
+['C','只要他回来就行',{BDY:-2,CLR:-2}],
+['D','我也不知道',{CLR:-2}],
+['E','我希望他一点都不用变',{LOV:2,GRV:-2}]]},
+
+{q:'他上一次让你觉得「这个人靠得住」，是什么时候？',o:[
+['A','就最近，还很清晰',{TRS:3,RSP:2}],
+['B','有点久了',{}],
+['C','想不起来了',{TRS:-3}],
+['D','从来没有过',{TRS:-3,INV:1}],
+['E','「靠得住」这个词跟他不太搭',{TRS:-2,fwd:1}]]},
+
+{q:'假设复合了，你最想做的第一件事是什么？',o:[
+['A','好好聊一次，把话说开',{CLR:2,PAT:1}],
+['B','什么也不说，就待在一起',{LOV:2,lone:2}],
+['C','让他知道我有多难受',{INV:2,unw:2}],
+['D','检查他手机',{TRS:-3,BDY:-1}],
+['E','重新开始，当作没分过',{CLR:-2,PAT:-1}]]},
+
+{q:'说实话，你来测这个之前，心里是不是已经有答案了？',o:[
+['A','有，但我不敢承认',{CLR:2}],
+['B','有一点，想确认',{}],
+['C','真的没有，很乱',{CLR:-1,raw:1}],
+['D','我希望你说「该复合」',{LOV:2,lone:1,CLR:-2}],
+['E','我希望你说「别复合」',{fwd:2,CLR:1}]]}
+];
+
+/* ============================================================
+   【以下为通用逻辑，换主题不用改】
+   ============================================================ */
+var N=QS.length, cur=0, ans=Array(N).fill(null), last=null;
+document.getElementById('ptot').textContent=N;
+
+function show(id){document.querySelectorAll('.pg').forEach(function(p){p.classList.remove('on');});document.getElementById(id).classList.add('on');window.scrollTo(0,0);}
+function startQ(){cur=0;ans=Array(N).fill(null);loadQ(0);show('p1');}
+function restart(){show('p0');}
+
+function loadQ(n){
+  document.getElementById('qnum').textContent='Q'+String(n+1).padStart(2,'0')+' / '+N;
+  document.getElementById('qtext').textContent=QS[n].q;
+  document.getElementById('pf').style.width=Math.round((n+1)/N*100)+'%';
+  document.getElementById('pnum').textContent=n+1;
+  document.getElementById('hint').textContent = n>=16
+    ? '💡 最后几题最扎心，别修饰，选真实反应'
+    : '💭 选第一反应，不要选「应该怎样」的那个答案';
+  var el=document.getElementById('opts');el.innerHTML='';
+  QS[n].o.forEach(function(o){
+    var b=document.createElement('button');
+    b.className='opt'+(ans[n]===o[0]?' sel':'');
+    b.dataset.v=o[0];
+    b.innerHTML='<span class="ol">'+o[0]+'</span><span>'+o[1]+'</span>';
+    b.onclick=function(){pick(o[0]);};
+    el.appendChild(b);
+  });
+  var bP=document.getElementById('bP');
+  bP.disabled=(n===0);bP.style.opacity=(n===0?'0.35':'1');
+  document.getElementById('bN').textContent=(n===N-1?'看结论 →':'下一页 →');
+}
+function pick(v){
+  ans[cur]=v;
+  document.querySelectorAll('.opt').forEach(function(b){b.classList.toggle('sel',b.dataset.v===v);});
+}
+function nextQ(){if(cur>=N-1){calc();return;}cur++;loadQ(cur);}
+function prevQ(){if(cur>0){cur--;loadQ(cur);}}
+
+// 标准化：把原始分转成 z 分，消除各维度量纲差异
+function toZ(uv){return uv.map(function(v,i){return (v-MEAN[i])/SD[i];});}
+// z 空间欧氏距离：越小越像
+function dist(a,b){var s=0;for(var i=0;i<a.length;i++){var d=a[i]-b[i];s+=d*d;}return Math.sqrt(s);}
+
+function calc(){
+  var uv=Array(10).fill(0),mot={acc:0,bst:0,fad:0,unk:0},prs={raw:0,msk:0,fwd:0,bck:0},tpo={love:0,unw:0,lone:0};
+  QS.forEach(function(q,i){
+    if(!ans[i])return;
+    var o=q.o.find(function(x){return x[0]===ans[i];});
+    if(!o||!o[2])return;
+    Object.keys(o[2]).forEach(function(k){
+      var idx=DK.indexOf(k);
+      if(idx>=0)uv[idx]+=o[2][k];
+      else if(mot.hasOwnProperty(k))mot[k]+=o[2][k];
+      else if(prs.hasOwnProperty(k))prs[k]+=o[2][k];
+      else if(tpo.hasOwnProperty(k))tpo[k]+=o[2][k];
+    });
+  });
+  var top=function(o,d){var ks=Object.keys(o);var m=ks.reduce(function(a,b){return o[a]>=o[b]?a:b;});return o[m]>0?m:d;};
+  var motK=top(mot,'unk'), prsK=top(prs,'raw'), tpoK=top(tpo,'love');
+  var zuv=toZ(uv);
+  var scored=TYPES.map(function(t){return {t:t,d:dist(zuv,t.v)+(PEN[t.k]||0)};});
+  scored.sort(function(a,b){return a.d-b.d;});
+  var win=scored[0].t, winD=dist(zuv,win.v);
+  var norm=Math.max(0,Math.min(1,1-winD/D0));
+  var fit=Math.round(win.fr[0]+(win.fr[1]-win.fr[0])*norm);
+  last={t:win,fit:fit,uv:uv,zuv:zuv,oth:scored.slice(1,5),motK:motK,prsK:prsK,tpoK:tpoK};
+  render(last);
+  show('p2');
+}
+
+function card(id,lbl,html,cls){
+  var el=document.getElementById(id);
+  el.className='card'+(cls?' '+cls:'');
+  el.innerHTML='<div class="cl">'+lbl+'</div><div class="ct">'+html+'</div>';
+}
+
+function render(R){
+  var T=R.t;
+  document.getElementById('rH').innerHTML=
+    '<div class="rf">'+T.f+'</div>'+
+    '<div class="rn">定音</div>'+
+    '<div class="vbig">'+T.vc+'</div>'+
+    '<div class="vtype">'+T.n+'</div>'+
+    '<div class="rvs">'+T.vs+'</div>'+
+    '<div class="rfit"><div class="rfitn">'+R.fit+'%</div><div class="rfitl">复合成功率</div></div>'+
+    '<div class="rwin">'+T.win+'</div>'+
+    '<div class="rvd">'+T.vd+'</div>';
+
+  card('rV','🎯 这个结论是怎么来的',T.nr.split('|').map(function(x){return '<p>'+x+'</p>';}).join(''));
+
+  var xH='<div class="cl">📋 三件你必须先接受的事</div>';
+  T.ex.forEach(function(e,i){
+    xH+='<div class="ei"'+(i===T.ex.length-1?' style="border:none;padding-bottom:0"':'')+'>'+
+        '<div class="ew">'+e[0]+'</div><div class="em">'+e[1]+'</div><div class="ey">'+e[2]+'</div></div>';
+  });
+  document.getElementById('rX').innerHTML=xH;
+
+  document.getElementById('rR').innerHTML='<div class="cl">⚠️ 你最可能栽在哪一步</div><div class="ct">'+T.rk+'</div>';
+
+  var mx=Math.max.apply(null,R.uv.concat([1]));
+  var dH='<div class="cl">📊 你的十维剖面（Top 5）</div>';
+  R.uv.map(function(v,i){return{n:DN[i],v:v};}).sort(function(a,b){return b.v-a.v;}).slice(0,5).forEach(function(d){
+    var p=Math.round(Math.max(0,d.v)/mx*88);
+    dH+='<div class="bi"><div class="bn">'+d.n+'</div><div class="bk"><div class="bf" data-p="'+p+'"></div></div><div class="bv">'+p+'</div></div>';
+  });
+  document.getElementById('rD').innerHTML=dH;
+
+  var mH='<div class="cl">🧭 三条关键轴</div>';
+  mH+='<div class="ey" style="margin-bottom:10px"><b>分开的方式 · </b>'+MOTlb[R.motK]+'　'+MOTtx[R.motK]+'</div>';
+  mH+='<div class="ey" style="margin-bottom:10px"><b>你现在的状态 · </b>'+PRSlb[R.prsK]+'　'+PRStx[R.prsK]+'</div>';
+  mH+='<div class="ey"><b>你真正想要的 · </b>'+TPOlb[R.tpoK]+'　'+TPOtx[R.tpoK]+'</div>';
+  document.getElementById('rM').innerHTML=mH;
+
+  var oH='<div class="cl">🔍 你也可能偏向这几种</div>';
+  var ds=R.oth.map(function(s){return s.d;});
+  var dmin=Math.min.apply(null,ds), dmax=Math.max.apply(null,ds);
+  R.oth.forEach(function(s){
+    var p=(dmax-dmin<0.01)?70:Math.max(10,Math.round(88-78*(s.d-dmin)/(dmax-dmin)));
+    oH+='<div class="bi"><div class="bn" style="width:86px">'+s.t.f+' '+s.t.n+'</div><div class="bk"><div class="bg" data-p="'+p+'"></div></div><div class="bv">'+p+'</div></div>';
+  });
+  document.getElementById('rO').innerHTML=oH;
+
+  var aH='<div class="cl">📌 接下来这么做</div>';
+  T.ac.forEach(function(a,i){
+    aH+='<div class="ti"><div class="tn">'+(i+1)+'</div><div>'+a+'</div></div>';
+  });
+  document.getElementById('rA').innerHTML=aH;
+
+  setTimeout(function(){
+    document.querySelectorAll('.bf,.bg').forEach(function(el){el.style.width=el.dataset.p+'%';});
+  },150);
+}
+
+function copyResult(){
+  if(!last)return;
+  var T=last.t;
+  var s='【'+CFG.brand+'】'+T.vc+'\n'+
+        '「'+T.n+'」复合成功率 '+last.fit+'%\n'+
+        T.vs+'\n'+
+        '分开方式·'+MOTlb[last.motK]+'｜状态·'+PRSlb[last.prsK]+'｜驱动·'+TPOlb[last.tpoK];
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(s).then(function(){alert('结论已复制，去粘贴吧');},function(){prompt('复制这段：',s);});
+  }else{ prompt('复制这段：',s); }
+}
+</script>
+</body>
+</html>
